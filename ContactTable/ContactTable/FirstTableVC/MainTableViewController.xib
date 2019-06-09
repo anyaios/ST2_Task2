@@ -21,13 +21,18 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MjG-2q-6vW">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MjG-2q-6vW">
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="MjG-2q-6vW" firstAttribute="trailing" secondItem="Q5M-cg-NOt" secondAttribute="trailing" id="S3i-bL-Ac1"/>
+                <constraint firstItem="MjG-2q-6vW" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" id="f3U-a3-VcM"/>
+                <constraint firstItem="MjG-2q-6vW" firstAttribute="bottom" secondItem="Q5M-cg-NOt" secondAttribute="bottom" id="rug-p2-AgY"/>
+                <constraint firstItem="MjG-2q-6vW" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="xX0-OZ-bL1"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
         </view>
     </objects>
