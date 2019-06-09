@@ -22,24 +22,13 @@
     [super viewDidLoad];
     self.title = @"Контакты";
     _array = [NSMutableArray array];
-//    for (int i =0 ; i < 10; ++i) {
-//        ContactObject *object = [ContactObject new];
-//        object.name = [NSString stringWithFormat:@"Name %i",i];
-//        object.lastname = [NSString stringWithFormat:@"Last Name"];
-//        [_array addObject:object];
-//    }
-    
     [self fetchContactsandAuthorization];
     _mainTableView.dataSource = self;
     _mainTableView.delegate = self;
     
     UINib *nib = [UINib nibWithNibName:@"CustomTableViewCell" bundle:nil];
     [_mainTableView registerNib:nib forCellReuseIdentifier:@"CustomCell"];
-
-    //CNContactStore *store = [[CNContactStore alloc] init];
-    //    CNMutableContact *contact = [[CNMutableContact alloc] init];
-  
-    
+    [self.mainTableView reloadData];
 }
 
 - (void)fetchContactsandAuthorization
@@ -89,13 +78,21 @@
                         }
                     }
                     NSDictionary *personDict = [[NSDictionary alloc] initWithObjectsAndKeys: fullName,@"fullName",object.image,@"userImage",object.phone,@"PhoneNumbers", nil];
-                    [self->_array addObject:[NSString stringWithFormat:@"%@",[personDict objectForKey:@"fullName"]]];
-                    NSLog(@"The contactsArray are - %@",self->_array);
+                    [self.array addObject:[NSString stringWithFormat:@"%@",[personDict objectForKey:@"fullName"]]];
+                    NSLog(@"The contactsArray are - %@",self.array);
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self->_mainTableView reloadData];
+                    [self.mainTableView reloadData];
                 });
             }
+        } else {
+        
+            dispatch_async(dispatch_get_main_queue(), ^{
+            self.view.layer.backgroundColor = [[UIColor lightGrayColor] CGColor];
+            UILabel *textError = [[UILabel alloc] initWithFrame:self.view.frame];
+            textError.text = @"Доступ к списку контактов запрещен. Войдите в Settings и разрешите доступ.";
+            [self.view addSubview:textError]; });
+            
         }
     }];
 }
@@ -114,7 +111,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 1;
 }
 
 #pragma mark - Delegate
