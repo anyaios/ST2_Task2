@@ -13,7 +13,7 @@
 
 
 @interface MainTableViewController : UIViewController
-
+@property NSArray *keys;
 @end
 
 

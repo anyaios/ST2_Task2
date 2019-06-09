@@ -22,8 +22,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.layer.backgroundColor = [[UIColor colorWithHexString:@"0XF9F9F9"] CGColor];
-    self.title = @"Контакты";
+    self.view.backgroundColor = [UIColor colorWithHexString:@"0XF9F9F9"];
+    [self addNavigation];
+    
     _array = [NSMutableArray array];
     [self fetchContactsandAuthorization];
     _mainTableView.dataSource = self;
@@ -34,6 +35,16 @@
     [self.mainTableView reloadData];
 }
 
+- (void)addNavigation {
+    self.title = @"Контакты";
+    self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithHexString:@"0XE6E6E6"];
+    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHexString:@"0XFFFFFF"];
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"0X000000"],
+       NSFontAttributeName:[UIFont systemFontOfSize:17.0 weight:UIFontWeightSemibold]}];
+}
+
 - (void)fetchContactsandAuthorization
 {
     // Request authorization to Contacts
@@ -42,11 +53,12 @@
         if (granted == YES)
         {
             //keys with fetching properties
-            NSArray *keys = @[CNContactFamilyNameKey, CNContactGivenNameKey, CNContactPhoneNumbersKey, CNContactImageDataKey];
+            self.keys = @[CNContactFamilyNameKey, CNContactGivenNameKey, CNContactPhoneNumbersKey, CNContactImageDataKey];
             NSString *containerId = store.defaultContainerIdentifier;
             NSPredicate *predicate = [CNContact predicateForContactsInContainerWithIdentifier:containerId];
             NSError *error;
-            NSArray *cnContacts = [store unifiedContactsMatchingPredicate:predicate keysToFetch:keys error:&error];
+            NSArray *cnContacts = [store unifiedContactsMatchingPredicate:predicate keysToFetch:self.keys error:&error];
+            
             if (error)
             {
                 NSLog(@"error fetching contacts %@", error);
@@ -57,6 +69,7 @@
                 ContactObject *object = [ContactObject new];
                 NSMutableArray *contactNumbersArray = [[NSMutableArray alloc]init];
                 for (CNContact *contact in cnContacts) {
+                    
                     // copy data to my custom Contacts class.
                     object.name = contact.givenName;
                     object.lastname = contact.familyName;
@@ -66,7 +79,7 @@
                         fullName=[NSString stringWithFormat:@"%@",object.lastname];
                     }
                     else{
-                        fullName=[NSString stringWithFormat:@"%@ %@",object.name,object.lastname];
+                        fullName=[NSString stringWithFormat:@"%@ %@",object.lastname,object.name];
                     }
                     UIImage *image = [UIImage imageWithData:contact.imageData];
                     if (image != nil) {
@@ -84,6 +97,7 @@
                     [self.array addObject:[NSString stringWithFormat:@"%@",[personDict objectForKey:@"fullName"]]];
                     NSLog(@"The contactsArray are - %@",self.array);
                 }
+   
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.mainTableView reloadData];
                 });
@@ -125,7 +139,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CustomTableViewCell *cell = (CustomTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"CustomCell" forIndexPath:indexPath];
     //  ContactObject *object = _array[indexPath.row];
-    cell.labelName.text = _array[indexPath.row];
+
+    NSArray *sortedStrings = [_array sortedArrayUsingSelector:@selector(compare:)];
+    cell.labelName.text = sortedStrings[indexPath.row];
     return cell;
 }
 
