@@ -14,6 +14,8 @@
 
 @interface MainTableViewController : UIViewController
 @property NSArray *keys;
+@property (nonatomic, strong) NSArray *titles;
+@property (nonatomic, strong) NSArray *sortedArray;
 @end
 
 

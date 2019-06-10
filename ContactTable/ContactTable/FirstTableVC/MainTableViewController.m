@@ -26,7 +26,11 @@
     [self addNavigation];
     
     _array = [NSMutableArray array];
+  //  _sortedArray = [NSMutableArray array];
+  //  _titles = [NSMutableArray array];
+  
     [self fetchContactsandAuthorization];
+    
     _mainTableView.dataSource = self;
     _mainTableView.delegate = self;
     
@@ -96,6 +100,7 @@
                     NSDictionary *personDict = [[NSDictionary alloc] initWithObjectsAndKeys: fullName,@"fullName",object.image,@"userImage",object.phone,@"PhoneNumbers", nil];
                     [self.array addObject:[NSString stringWithFormat:@"%@",[personDict objectForKey:@"fullName"]]];
                     NSLog(@"The contactsArray are - %@",self.array);
+                    
                 }
    
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -129,6 +134,18 @@
         }
     }];
 }
+- (void) makeSection {
+    NSMutableArray *arr = [NSMutableArray new];
+    for (int i=0; i<[_sortedArray count]; i++){
+        NSString *alphabet = [[_sortedArray objectAtIndex:i] uppercaseString];
+        NSString *first = [alphabet substringToIndex:1];
+        [arr addObject:first];
+    }
+    NSOrderedSet *orderedSet = [NSOrderedSet orderedSetWithArray:arr];
+    _titles = [orderedSet.array filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != %@",orderedSet.array.firstObject]];
+    NSLog(@"titles %@", _titles);
+    
+}
 
 #pragma mark - DataSourse
 
@@ -139,14 +156,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CustomTableViewCell *cell = (CustomTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"CustomCell" forIndexPath:indexPath];
     //  ContactObject *object = _array[indexPath.row];
+    [self makeSection];
 
-    NSArray *sortedStrings = [_array sortedArrayUsingSelector:@selector(compare:)];
-    cell.labelName.text = sortedStrings[indexPath.row];
+    self.sortedArray = [_array sortedArrayUsingSelector:@selector(compare:)];
+    cell.labelName.text = self.sortedArray[indexPath.row];
     return cell;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 #pragma mark - Delegate
