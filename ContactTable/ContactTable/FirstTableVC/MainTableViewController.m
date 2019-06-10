@@ -38,6 +38,10 @@
     
     UINib *nib = [UINib nibWithNibName:@"CustomTableViewCell" bundle:nil];
     [_mainTableView registerNib:nib forCellReuseIdentifier:@"CustomCell"];
+    
+    //  _recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+    
+    
     [self.mainTableView reloadData];
 }
 
@@ -97,7 +101,7 @@
                         
                         fullName=[NSString stringWithFormat:@"%@ %@",newLastname,newName];
                     }
-                        
+                    
                     
                     UIImage *image = [UIImage imageWithData:contact.imageData];
                     if (image != nil) {
@@ -111,8 +115,8 @@
                             [contactNumbersArray addObject:object.phone];
                         }
                     }
-                    NSDictionary *personDict = [[NSDictionary alloc] initWithObjectsAndKeys: fullName,@"fullName",object.image,@"userImage",object.phone,@"PhoneNumbers", nil];
-                    [self.array addObject:[NSString stringWithFormat:@"%@",[personDict objectForKey:@"fullName"]]];
+                    self.personDict = [[NSDictionary alloc] initWithObjectsAndKeys: fullName,@"fullName",object.image,@"userImage",object.phone,@"PhoneNumbers", nil];
+                    [self.array addObject:[NSString stringWithFormat:@"%@",[self.personDict objectForKey:@"fullName"]]];
                     // NSLog(@"The contactsArray are - %@",self.array);
                     
                 }
@@ -169,10 +173,15 @@
     }
     NSOrderedSet *orderedSet = [NSOrderedSet orderedSetWithArray:arr];
     _titles = orderedSet.array;
-//    _titles = [orderedSet.array filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != %@",orderedSet.array.firstObject]];
+    //    _titles = [orderedSet.array filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != %@",orderedSet.array.firstObject]];
     NSLog(@"titles %@", _titles);
     
 }
+
+- (void)tap {
+    
+}
+
 
 #pragma mark - DataSourse
 
@@ -188,6 +197,12 @@
     NSString *sectionTitle = [self.titles objectAtIndex:indexPath.section];
     NSArray *sectionName = [self.dictionary objectForKey:sectionTitle];
     NSString *contact = [sectionName objectAtIndex:indexPath.row];
+    
+    cell.backgroundColor = [UIColor colorWithHexString:@"0xFFFFFF"];
+    cell.layer.borderColor = [[UIColor colorWithHexString:@"0xDFDFDF"] CGColor];
+    
+    
+    
     cell.labelName.text = contact;
     return cell;
 }
@@ -195,9 +210,52 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [self.titles count];
 }
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    return [self.titles objectAtIndex:section];
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 60;
 }
+
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    NSString *sectionTitle = [self.titles objectAtIndex:section];
+    NSArray *sectionArray = [self.dictionary objectForKey:sectionTitle];
+    
+    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0,tableView.frame.size.width, 60)];;
+    header.backgroundColor = [UIColor colorWithHexString:@"0XF9F9F9"];
+    header.layer.borderColor = [[UIColor colorWithHexString:@"0XDFDFDF"] CGColor];
+    header.layer.borderWidth = 1;
+    
+    UILabel *letter = [[UILabel alloc] initWithFrame:CGRectMake(25, 0, 12, 60)];
+    letter.text = [[NSString stringWithString:sectionTitle] uppercaseString];
+    letter.font = [UIFont systemFontOfSize:17 weight:UIFontWeightBold];
+    [header addSubview:letter];
+    
+    UILabel *contacts = [[UILabel alloc] initWithFrame:CGRectMake(25 + letter.frame.size.width + 10, 0, 100, 60)];
+    
+    contacts.text = [NSString stringWithFormat:@"контактов: %lu",(unsigned long)sectionArray.count];
+    contacts.font = [UIFont systemFontOfSize:17 weight:UIFontWeightLight];
+    [header addSubview:contacts];
+    
+    
+    
+    // UIImage *up = [UIImage imageNamed:@"arrow_up"];
+    UIImage *down = [UIImage imageNamed:@"arrow_down"];
+    UIImageView *icon = [[UIImageView alloc] initWithImage:down];
+    icon.translatesAutoresizingMaskIntoConstraints = NO;
+    [header addSubview:icon];
+    
+    [NSLayoutConstraint activateConstraints:@[
+                                              [icon.trailingAnchor constraintEqualToAnchor:header.trailingAnchor constant: -20],
+                                              [icon.centerYAnchor constraintEqualToAnchor:header.centerYAnchor],
+                                              [icon.heightAnchor constraintEqualToConstant:20]
+                                              
+                                              ]];
+    
+    return header;
+}
+
 
 #pragma mark - Delegate
 
