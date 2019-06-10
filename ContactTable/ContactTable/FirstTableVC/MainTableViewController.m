@@ -28,9 +28,9 @@
     _array = [NSMutableArray array];
     _helpArray = [NSMutableArray array];
     _dictionary = [NSMutableDictionary dictionary];
-  //  _sortedArray = [NSMutableArray array];
-  //  _titles = [NSMutableArray array];
-  
+    //  _sortedArray = [NSMutableArray array];
+    //  _titles = [NSMutableArray array];
+    
     [self fetchContactsandAuthorization];
     
     _mainTableView.dataSource = self;
@@ -43,6 +43,7 @@
 
 - (void)addNavigation {
     self.title = @"Контакты";
+    [self.navigationController.navigationBar sizeThatFits:CGSizeMake(self.view.frame.size.width, 64)];
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.tintColor = [UIColor colorWithHexString:@"0XE6E6E6"];
     self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHexString:@"0XFFFFFF"];
@@ -75,19 +76,29 @@
                 ContactObject *object = [ContactObject new];
                 NSMutableArray *contactNumbersArray = [[NSMutableArray alloc]init];
                 for (CNContact *contact in cnContacts) {
-                    
-                    // copy data to my custom Contacts class.
                     object.name = contact.givenName;
                     object.lastname = contact.familyName;
-                    if (object.lastname == nil) {
-                        fullName=[NSString stringWithFormat:@"%@",[object.name substringFromIndex:object.lastname.length]];
+                    NSString *newName = [NSString string];
+                    newName = [object.name substringFromIndex:0];
+                    NSString *newLastname = [NSString string];
+                    newLastname = [object.lastname substringFromIndex:0];
+                    if (newLastname.length <= 0 ) {
+                        fullName = newName;
+                        // fullName=[NSString stringWithFormat:@"%@",[object.name substringFromIndex:0]];
                         NSLog(@".%lu.", (unsigned long)[object.name length]);
-                    }else if (object.name == nil){
-                        fullName=[NSString stringWithFormat:@"%@",object.lastname];
+                        NSLog(@"name  .%@. ",object.name);
+                    }else if (newName.length <= 0){
+                        
+                        fullName = newLastname;
                     }
-                    else{
-                        fullName=[NSString stringWithFormat:@"%@ %@",object.lastname,object.name];
+                    else if (!(newName && newLastname)){
+                        fullName = @"#";
+                    } else {
+                        
+                        fullName=[NSString stringWithFormat:@"%@ %@",newLastname,newName];
                     }
+                        
+                    
                     UIImage *image = [UIImage imageWithData:contact.imageData];
                     if (image != nil) {
                         object.image = image;
@@ -102,7 +113,7 @@
                     }
                     NSDictionary *personDict = [[NSDictionary alloc] initWithObjectsAndKeys: fullName,@"fullName",object.image,@"userImage",object.phone,@"PhoneNumbers", nil];
                     [self.array addObject:[NSString stringWithFormat:@"%@",[personDict objectForKey:@"fullName"]]];
-                   // NSLog(@"The contactsArray are - %@",self.array);
+                    // NSLog(@"The contactsArray are - %@",self.array);
                     
                 }
                 self.sortedArray = [self.array sortedArrayUsingSelector:@selector(compare:)];
@@ -117,7 +128,7 @@
                 }
                 self.dictionary = dict;
                 NSLog(@"The contactsArray are - %@",self.dictionary);
-   
+                
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.mainTableView reloadData];
                 });
@@ -157,8 +168,8 @@
         [arr addObject:first];
     }
     NSOrderedSet *orderedSet = [NSOrderedSet orderedSetWithArray:arr];
-   // _titles = orderedSet.array;
-    _titles = [orderedSet.array filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != %@",orderedSet.array.firstObject]];
+    _titles = orderedSet.array;
+//    _titles = [orderedSet.array filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != %@",orderedSet.array.firstObject]];
     NSLog(@"titles %@", _titles);
     
 }
@@ -213,5 +224,6 @@
 
 
 @end
+
 
 
