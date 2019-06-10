@@ -26,6 +26,8 @@
     [self addNavigation];
     
     _array = [NSMutableArray array];
+    _helpArray = [NSMutableArray array];
+    _dictionary = [NSMutableDictionary dictionary];
   //  _sortedArray = [NSMutableArray array];
   //  _titles = [NSMutableArray array];
   
@@ -78,7 +80,8 @@
                     object.name = contact.givenName;
                     object.lastname = contact.familyName;
                     if (object.lastname == nil) {
-                        fullName=[NSString stringWithFormat:@"%@",object.name];
+                        fullName=[NSString stringWithFormat:@"%@",[object.name substringFromIndex:object.lastname.length]];
+                        NSLog(@".%lu.", (unsigned long)[object.name length]);
                     }else if (object.name == nil){
                         fullName=[NSString stringWithFormat:@"%@",object.lastname];
                     }
@@ -99,9 +102,21 @@
                     }
                     NSDictionary *personDict = [[NSDictionary alloc] initWithObjectsAndKeys: fullName,@"fullName",object.image,@"userImage",object.phone,@"PhoneNumbers", nil];
                     [self.array addObject:[NSString stringWithFormat:@"%@",[personDict objectForKey:@"fullName"]]];
-                    NSLog(@"The contactsArray are - %@",self.array);
+                   // NSLog(@"The contactsArray are - %@",self.array);
                     
                 }
+                self.sortedArray = [self.array sortedArrayUsingSelector:@selector(compare:)];
+                [self makeSection];
+                NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+                for (NSString *string in self.sortedArray) {
+                    NSString *firstLetter = [string substringToIndex:1];
+                    if (!dict[firstLetter]) {
+                        dict[firstLetter] = [[NSMutableArray alloc] init];
+                    }
+                    [((NSMutableArray *)dict[firstLetter]) addObject:string];
+                }
+                self.dictionary = dict;
+                NSLog(@"The contactsArray are - %@",self.dictionary);
    
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.mainTableView reloadData];
@@ -142,6 +157,7 @@
         [arr addObject:first];
     }
     NSOrderedSet *orderedSet = [NSOrderedSet orderedSetWithArray:arr];
+   // _titles = orderedSet.array;
     _titles = [orderedSet.array filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != %@",orderedSet.array.firstObject]];
     NSLog(@"titles %@", _titles);
     
@@ -150,21 +166,26 @@
 #pragma mark - DataSourse
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _array.count;
+    NSString *sectionTitle = [self.titles objectAtIndex:section];
+    NSArray *sectionArray = [self.dictionary objectForKey:sectionTitle];
+    return sectionArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CustomTableViewCell *cell = (CustomTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"CustomCell" forIndexPath:indexPath];
-    //  ContactObject *object = _array[indexPath.row];
-    [self makeSection];
-
-    self.sortedArray = [_array sortedArrayUsingSelector:@selector(compare:)];
-    cell.labelName.text = self.sortedArray[indexPath.row];
+    
+    NSString *sectionTitle = [self.titles objectAtIndex:indexPath.section];
+    NSArray *sectionName = [self.dictionary objectForKey:sectionTitle];
+    NSString *contact = [sectionName objectAtIndex:indexPath.row];
+    cell.labelName.text = contact;
     return cell;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return [self.titles count];
+}
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    return [self.titles objectAtIndex:section];
 }
 
 #pragma mark - Delegate

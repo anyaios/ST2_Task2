@@ -16,6 +16,9 @@
 @property NSArray *keys;
 @property (nonatomic, strong) NSArray *titles;
 @property (nonatomic, strong) NSArray *sortedArray;
+@property (nonatomic, strong) NSMutableArray *helpArray;
+@property (nonatomic, strong) NSDictionary *dictionary;
+
 @end
 
 
