@@ -20,33 +20,34 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WOQ-Ig-O4h">
-                        <rect key="frame" x="25" y="18.5" width="182" height="20.5"/>
+                        <rect key="frame" x="25" y="19" width="42" height="19.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CHZ-JQ-OHF">
-                        <rect key="frame" x="264" y="12" width="35" height="33.5"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="35" id="Gq9-Sr-f6O"/>
-                        </constraints>
-                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Obb-6A-vh1">
+                        <rect key="frame" x="277" y="13" width="22" height="31.5"/>
+                        <state key="normal" image="info"/>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="CHZ-JQ-OHF" firstAttribute="leading" secondItem="WOQ-Ig-O4h" secondAttribute="trailing" constant="57" id="07u-5H-TyT"/>
-                    <constraint firstItem="CHZ-JQ-OHF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-43" id="8e8-NW-7CR"/>
-                    <constraint firstAttribute="trailing" secondItem="CHZ-JQ-OHF" secondAttribute="trailing" constant="20" id="Yz1-NW-1AP"/>
-                    <constraint firstItem="CHZ-JQ-OHF" firstAttribute="centerY" secondItem="WOQ-Ig-O4h" secondAttribute="centerY" id="gYK-VE-f20"/>
-                    <constraint firstItem="CHZ-JQ-OHF" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="uZd-S9-vOI"/>
+                    <constraint firstItem="Obb-6A-vh1" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="64e-na-Ivf"/>
+                    <constraint firstItem="WOQ-Ig-O4h" firstAttribute="centerY" secondItem="Obb-6A-vh1" secondAttribute="centerY" id="UcX-hJ-NMY"/>
+                    <constraint firstItem="Obb-6A-vh1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-42" id="d7W-hc-Yz7"/>
+                    <constraint firstItem="WOQ-Ig-O4h" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-36" id="hce-6W-jTC"/>
+                    <constraint firstAttribute="trailing" secondItem="Obb-6A-vh1" secondAttribute="trailing" constant="20" id="hea-KD-sfm"/>
                     <constraint firstItem="WOQ-Ig-O4h" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="x8P-Mx-i0r"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
-                <outlet property="info" destination="CHZ-JQ-OHF" id="Dki-tP-JfS"/>
+                <outlet property="info" destination="Obb-6A-vh1" id="web-I9-iP7"/>
                 <outlet property="labelName" destination="WOQ-Ig-O4h" id="apk-Q7-4ov"/>
             </connections>
             <point key="canvasLocation" x="50.000000000000007" y="39.508928571428569"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="info" width="22" height="22"/>
+    </resources>
 </document>

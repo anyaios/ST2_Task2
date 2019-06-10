@@ -200,15 +200,15 @@
     
     cell.backgroundColor = [UIColor colorWithHexString:@"0xFFFFFF"];
     cell.layer.borderColor = [[UIColor colorWithHexString:@"0xDFDFDF"] CGColor];
+   // [cell.selectedBackgroundView setBackgroundColor:[UIColor colorWithHexString:@"0xFEF6E6"]];
     
     UIImage *infoIcon = [UIImage imageNamed:@"info"];
-    cell.info.image = infoIcon;
-    
-    
-    
+    cell.info.imageView.image = infoIcon;
     cell.labelName.text = contact;
+
     return cell;
 }
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [self.titles count];
@@ -221,6 +221,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 60;
 }
+
+
 
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -267,12 +269,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // ContactObject *object = _array[indexPath.row];
+    
+   // [UIColor colorWithHexString:@"0xFEF6E6"];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Alert"
                                                                    message:@"Message"
                                                             preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:action];
     [self presentViewController:alert animated:YES completion:nil];
+    
+}
+
+-(void)setRecognizer:(UITapGestureRecognizer *)recognizer{
     
 }
 
