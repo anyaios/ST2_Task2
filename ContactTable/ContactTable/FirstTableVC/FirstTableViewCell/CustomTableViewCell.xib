@@ -19,17 +19,31 @@
                 <rect key="frame" x="0.0" y="0.0" width="319" height="57.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WOQ-Ig-O4h">
-                        <rect key="frame" x="16" y="18" width="247" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WOQ-Ig-O4h">
+                        <rect key="frame" x="25" y="18.5" width="182" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CHZ-JQ-OHF">
+                        <rect key="frame" x="264" y="12" width="35" height="33.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="35" id="Gq9-Sr-f6O"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="CHZ-JQ-OHF" firstAttribute="leading" secondItem="WOQ-Ig-O4h" secondAttribute="trailing" constant="57" id="07u-5H-TyT"/>
+                    <constraint firstItem="CHZ-JQ-OHF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-43" id="8e8-NW-7CR"/>
+                    <constraint firstAttribute="trailing" secondItem="CHZ-JQ-OHF" secondAttribute="trailing" constant="20" id="Yz1-NW-1AP"/>
+                    <constraint firstItem="CHZ-JQ-OHF" firstAttribute="centerY" secondItem="WOQ-Ig-O4h" secondAttribute="centerY" id="gYK-VE-f20"/>
+                    <constraint firstItem="CHZ-JQ-OHF" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="uZd-S9-vOI"/>
+                    <constraint firstItem="WOQ-Ig-O4h" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="x8P-Mx-i0r"/>
+                </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
+                <outlet property="info" destination="CHZ-JQ-OHF" id="Dki-tP-JfS"/>
                 <outlet property="labelName" destination="WOQ-Ig-O4h" id="apk-Q7-4ov"/>
             </connections>
             <point key="canvasLocation" x="50.000000000000007" y="39.508928571428569"/>

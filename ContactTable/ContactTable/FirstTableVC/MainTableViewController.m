@@ -201,6 +201,9 @@
     cell.backgroundColor = [UIColor colorWithHexString:@"0xFFFFFF"];
     cell.layer.borderColor = [[UIColor colorWithHexString:@"0xDFDFDF"] CGColor];
     
+    UIImage *infoIcon = [UIImage imageNamed:@"info"];
+    cell.info.image = infoIcon;
+    
     
     
     cell.labelName.text = contact;
@@ -211,6 +214,9 @@
     return [self.titles count];
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 70;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 60;
