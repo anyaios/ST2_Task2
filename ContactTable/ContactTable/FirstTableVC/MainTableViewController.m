@@ -186,14 +186,19 @@
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    if ([[_helpArray objectAtIndex:section] boolValue]) {
-        NSString *sectionTitle = [self.titles objectAtIndex:section];
-        NSArray *sectionArray = [self.dictionary objectForKey:sectionTitle];
+    NSString *sectionTitle = [self.titles objectAtIndex:section];
+    NSArray *sectionArray = [self.dictionary objectForKey:sectionTitle];
+    
+    if ([[_helpArray objectAtIndex:section] boolValue]){
+        return 0;
+        
+    } else {
         return sectionArray.count;
     }
-    else
-        return 0;
+    
+    
 }
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CustomTableViewCell *cell = (CustomTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"CustomCell" forIndexPath:indexPath];
@@ -210,7 +215,6 @@
     UIImage *infoIcon = [UIImage imageNamed:@"info"];
     cell.info.imageView.image = infoIcon;
     cell.labelName.text = contact;
-    
     return cell;
 }
 
@@ -220,13 +224,12 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([[_helpArray objectAtIndex:indexPath.section] boolValue]) {
-        return 70;
-    }
-    return 0;
+    return 70;
+
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    
     return 60;
 }
 
@@ -292,7 +295,7 @@
             }
         }
         [_mainTableView reloadSections:[NSIndexSet indexSetWithIndex:gestureRecognizer.view.tag] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
+        NSLog(@"tapped");
     }
     
 }
