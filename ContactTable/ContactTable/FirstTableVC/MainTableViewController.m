@@ -39,10 +39,13 @@
     UINib *nib = [UINib nibWithNibName:@"CustomTableViewCell" bundle:nil];
     [_mainTableView registerNib:nib forCellReuseIdentifier:@"CustomCell"];
     
-    //  _recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+    
+    for (int i=0; i<_dictionary.allKeys.count; i++) {
+        [_helpArray addObject:[NSNumber numberWithBool:NO]];
+    }
     
     
-    [self.mainTableView reloadData];
+    // [self.mainTableView reloadData];
 }
 
 - (void)addNavigation {
@@ -186,13 +189,19 @@
 #pragma mark - DataSourse
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSString *sectionTitle = [self.titles objectAtIndex:section];
-    NSArray *sectionArray = [self.dictionary objectForKey:sectionTitle];
-    return sectionArray.count;
+    
+    if ([[_helpArray objectAtIndex:section] boolValue]) {
+        NSString *sectionTitle = [self.titles objectAtIndex:section];
+        NSArray *sectionArray = [self.dictionary objectForKey:sectionTitle];
+        return sectionArray.count;
+    }
+    else
+        return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CustomTableViewCell *cell = (CustomTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"CustomCell" forIndexPath:indexPath];
+    
     
     NSString *sectionTitle = [self.titles objectAtIndex:indexPath.section];
     NSArray *sectionName = [self.dictionary objectForKey:sectionTitle];
@@ -200,12 +209,12 @@
     
     cell.backgroundColor = [UIColor colorWithHexString:@"0xFFFFFF"];
     cell.layer.borderColor = [[UIColor colorWithHexString:@"0xDFDFDF"] CGColor];
-   // [cell.selectedBackgroundView setBackgroundColor:[UIColor colorWithHexString:@"0xFEF6E6"]];
+    // [cell.selectedBackgroundView setBackgroundColor:[UIColor colorWithHexString:@"0xFEF6E6"]];
     
     UIImage *infoIcon = [UIImage imageNamed:@"info"];
     cell.info.imageView.image = infoIcon;
     cell.labelName.text = contact;
-
+    
     return cell;
 }
 
@@ -215,7 +224,10 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 70;
+    if ([[_helpArray objectAtIndex:indexPath.section] boolValue]) {
+        return 70;
+    }
+    return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -260,17 +272,36 @@
                                               [icon.heightAnchor constraintEqualToConstant:20]
                                               
                                               ]];
-    
+    UITapGestureRecognizer  *headerTapped   = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sectionHeaderTapped:)];
+    header.tag = section;
+    [header addGestureRecognizer:headerTapped];
     return header;
 }
-
+- (void)sectionHeaderTapped:(UITapGestureRecognizer *)gestureRecognizer{
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:gestureRecognizer.view.tag];
+    if (indexPath.row == 0) {
+        BOOL collapsed  = [[_helpArray objectAtIndex:indexPath.section] boolValue];
+        for (int i=0; i<_titles.count; i++) {
+            if (indexPath.section==i) {
+                [_helpArray replaceObjectAtIndex:i withObject:[NSNumber numberWithBool:!collapsed]];
+            }
+        }
+        [_mainTableView reloadSections:[NSIndexSet indexSetWithIndex:gestureRecognizer.view.tag] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+    }
+    
+}
 
 #pragma mark - Delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // ContactObject *object = _array[indexPath.row];
+   [_helpArray replaceObjectAtIndex:indexPath.section withObject:[NSNumber numberWithBool:NO]];
     
-   // [UIColor colorWithHexString:@"0xFEF6E6"];
+  //  [_mainTableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    // [UIColor colorWithHexString:@"0xFEF6E6"];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Alert"
                                                                    message:@"Message"
                                                             preferredStyle:UIAlertControllerStyleAlert];
@@ -280,9 +311,6 @@
     
 }
 
--(void)setRecognizer:(UITapGestureRecognizer *)recognizer{
-    
-}
 
 /*
  #pragma mark - Navigation
