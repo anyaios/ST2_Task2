@@ -181,10 +181,6 @@
     
 }
 
-- (void)tap {
-    
-}
-
 
 #pragma mark - DataSourse
 
@@ -202,7 +198,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CustomTableViewCell *cell = (CustomTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"CustomCell" forIndexPath:indexPath];
     
-    
+  
     NSString *sectionTitle = [self.titles objectAtIndex:indexPath.section];
     NSArray *sectionName = [self.dictionary objectForKey:sectionTitle];
     NSString *contact = [sectionName objectAtIndex:indexPath.row];
@@ -242,6 +238,9 @@
     NSString *sectionTitle = [self.titles objectAtIndex:section];
     NSArray *sectionArray = [self.dictionary objectForKey:sectionTitle];
     
+  //  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:gestureRecognizer.view.tag];
+     
+    
     UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0,tableView.frame.size.width, 60)];;
     header.backgroundColor = [UIColor colorWithHexString:@"0XF9F9F9"];
     header.layer.borderColor = [[UIColor colorWithHexString:@"0XDFDFDF"] CGColor];
@@ -253,16 +252,20 @@
     [header addSubview:letter];
     
     UILabel *contacts = [[UILabel alloc] initWithFrame:CGRectMake(25 + letter.frame.size.width + 10, 0, 100, 60)];
-    
     contacts.text = [NSString stringWithFormat:@"контактов: %lu",(unsigned long)sectionArray.count];
     contacts.font = [UIFont systemFontOfSize:17 weight:UIFontWeightLight];
     [header addSubview:contacts];
     
     
     
-    // UIImage *up = [UIImage imageNamed:@"arrow_up"];
+    UIImage *up = [UIImage imageNamed:@"arrow_up"];
     UIImage *down = [UIImage imageNamed:@"arrow_down"];
-    UIImageView *icon = [[UIImageView alloc] initWithImage:down];
+    UIImageView *icon = [[UIImageView alloc]init];
+    if ([[_helpArray objectAtIndex:section] boolValue]) {
+        icon = [[UIImageView alloc] initWithImage:up];
+    } else {
+        icon = [[UIImageView alloc] initWithImage:down];
+    }
     icon.translatesAutoresizingMaskIntoConstraints = NO;
     [header addSubview:icon];
     
@@ -277,6 +280,7 @@
     [header addGestureRecognizer:headerTapped];
     return header;
 }
+
 - (void)sectionHeaderTapped:(UITapGestureRecognizer *)gestureRecognizer{
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:gestureRecognizer.view.tag];
@@ -297,7 +301,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // ContactObject *object = _array[indexPath.row];
-   [_helpArray replaceObjectAtIndex:indexPath.section withObject:[NSNumber numberWithBool:NO]];
+ //  [_helpArray replaceObjectAtIndex:indexPath.section withObject:[NSNumber numberWithBool:NO]];
     
   //  [_mainTableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
     
