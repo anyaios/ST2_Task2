@@ -28,7 +28,7 @@
     _array = [NSMutableArray array];
     _helpArray = [NSMutableArray array];
     _dictionary = [NSMutableDictionary dictionary];
-    //  _sortedArray = [NSMutableArray array];
+    //_sortedArr = [NSArray array];
     //  _titles = [NSMutableArray array];
     
     [self fetchContactsandAuthorization];
@@ -43,9 +43,25 @@
     for (int i=0; i<_dictionary.allKeys.count; i++) {
         [_helpArray addObject:[NSNumber numberWithBool:NO]];
     }
+    //[a-z0-9!@$&#]*$
+    //@"^[A-Za-z]+(?:\\s[A-Za-z]+)*$"
     
+}
+-(void)sort {
     
-    // [self.mainTableView reloadData];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"SELF MATCHES %@", @"[a-zA-Z0-9 @&$]*$"];
+    NSArray *results = [self.sortedArray filteredArrayUsingPredicate:predicate];
+    //NSLog(@"fullnames%@", results);
+    NSPredicate *predicate2 = [NSPredicate predicateWithFormat: @"SELF MATCHES %@", @"^[a-z0-9!&#]*$"];
+    NSArray *results2 = [self.sortedArray filteredArrayUsingPredicate:predicate2];
+    //NSLog(@"sumbols%@", results2);
+    NSMutableArray *arr = [NSMutableArray arrayWithArray:_sortedArray];
+    [arr removeObjectsInArray:results];
+    NSMutableArray *arr2 = [NSMutableArray arrayWithArray:arr];
+    [arr2 removeObjectsInArray:results2];
+    NSArray *newArray=[arr2 arrayByAddingObjectsFromArray:results];
+    _finalArray = [newArray arrayByAddingObjectsFromArray:results2];
+    NSLog(@"rus%@", _finalArray);
 }
 
 - (void)addNavigation {
@@ -98,7 +114,7 @@
                         
                         fullName = newLastname;
                     }
-                    else if (!(newName && newLastname)){
+                    else if (!(newName && newLastname)||!(newName)||!(newLastname)){
                         fullName = @"#";
                     } else {
                         
@@ -120,13 +136,15 @@
                     }
                     self.personDict = [[NSDictionary alloc] initWithObjectsAndKeys: fullName,@"fullName",object.image,@"userImage",object.phone,@"PhoneNumbers", nil];
                     [self.array addObject:[NSString stringWithFormat:@"%@",[self.personDict objectForKey:@"fullName"]]];
-                    // NSLog(@"The contactsArray are - %@",self.array);
+                    // NSLog(@"The contactsArray are - %@",self.array); [\u0401\u0451\u0410-\u044f]
                     
                 }
                 self.sortedArray = [self.array sortedArrayUsingSelector:@selector(compare:)];
+                [self sort];
                 [self makeSection];
+                
                 NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-                for (NSString *string in self.sortedArray) {
+                for (NSString *string in self.finalArray) {
                     NSString *firstLetter = [string substringToIndex:1];
                     if (!dict[firstLetter]) {
                         dict[firstLetter] = [[NSMutableArray alloc] init];
@@ -169,8 +187,8 @@
 }
 - (void) makeSection {
     NSMutableArray *arr = [NSMutableArray new];
-    for (int i=0; i<[_sortedArray count]; i++){
-        NSString *alphabet = [[_sortedArray objectAtIndex:i] uppercaseString];
+    for (int i=0; i<[_finalArray count]; i++){
+        NSString *alphabet = [[_finalArray objectAtIndex:i] uppercaseString];
         NSString *first = [alphabet substringToIndex:1];
         [arr addObject:first];
     }
@@ -203,7 +221,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CustomTableViewCell *cell = (CustomTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"CustomCell" forIndexPath:indexPath];
     
-  
+    
     NSString *sectionTitle = [self.titles objectAtIndex:indexPath.section];
     NSArray *sectionName = [self.dictionary objectForKey:sectionTitle];
     NSString *contact = [sectionName objectAtIndex:indexPath.row];
@@ -225,7 +243,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 70;
-
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -241,8 +259,8 @@
     NSString *sectionTitle = [self.titles objectAtIndex:section];
     NSArray *sectionArray = [self.dictionary objectForKey:sectionTitle];
     
-  //  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:gestureRecognizer.view.tag];
-     
+    //  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:gestureRecognizer.view.tag];
+    
     
     UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0,tableView.frame.size.width, 60)];;
     header.backgroundColor = [UIColor colorWithHexString:@"0XF9F9F9"];
@@ -307,9 +325,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // ContactObject *object = _array[indexPath.row];
- //  [_helpArray replaceObjectAtIndex:indexPath.section withObject:[NSNumber numberWithBool:NO]];
+    //  [_helpArray replaceObjectAtIndex:indexPath.section withObject:[NSNumber numberWithBool:NO]];
     
-  //  [_mainTableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+    //  [_mainTableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
     
     // [UIColor colorWithHexString:@"0xFEF6E6"];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Alert"

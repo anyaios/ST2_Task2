@@ -21,6 +21,8 @@
 @property (nonatomic, strong) NSDictionary *personDict;
 @property (nonatomic, strong) UITapGestureRecognizer *recognizer;
 
+@property (nonatomic, strong) NSArray *finalArray;
+
 @end
 
 
