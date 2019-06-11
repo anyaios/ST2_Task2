@@ -264,8 +264,11 @@
     UIImage *up = [UIImage imageNamed:@"arrow_up"];
     UIImage *down = [UIImage imageNamed:@"arrow_down"];
     UIImageView *icon = [[UIImageView alloc]init];
+    
     if ([[_helpArray objectAtIndex:section] boolValue]) {
         icon = [[UIImageView alloc] initWithImage:up];
+        letter.textColor = [UIColor colorWithHexString:@"0xD99100"];
+        contacts.textColor = [UIColor colorWithHexString:@"0xD99100"];
     } else {
         icon = [[UIImageView alloc] initWithImage:down];
     }
