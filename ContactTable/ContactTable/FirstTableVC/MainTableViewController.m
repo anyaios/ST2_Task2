@@ -233,6 +233,11 @@
     UIImage *infoIcon = [UIImage imageNamed:@"info"];
     cell.info.imageView.image = infoIcon;
     cell.labelName.text = contact;
+    
+    UIView *highlightedView = [[UIView alloc] init];
+    highlightedView.backgroundColor = [UIColor colorWithHexString:@"0XFEF6E6"];
+    [cell setSelectedBackgroundView:highlightedView];
+    
     return cell;
 }
 
@@ -241,7 +246,7 @@
     return [self.titles count];
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 70;
     
 }
