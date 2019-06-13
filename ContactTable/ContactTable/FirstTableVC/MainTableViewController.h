@@ -23,6 +23,11 @@
 
 @property (nonatomic, strong) NSArray *finalArray;
 
+
+@property (nonatomic,strong) NSString *message;
+@property (nonatomic, strong) NSMutableArray *arrayWithDict;
+
+
 @end
 
 

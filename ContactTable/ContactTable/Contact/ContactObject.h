@@ -15,6 +15,7 @@
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *lastname;
 @property (nonatomic, copy) NSString *phone;
+@property (nonatomic, copy) NSArray *phoneNumbers;
 @property (nonatomic, strong) UIImage *image;
 @end
 

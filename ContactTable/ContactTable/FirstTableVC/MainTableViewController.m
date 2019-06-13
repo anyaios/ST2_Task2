@@ -28,6 +28,8 @@
     _array = [NSMutableArray array];
     _helpArray = [NSMutableArray array];
     _dictionary = [NSMutableDictionary dictionary];
+
+    _arrayWithDict =  [NSMutableArray array];
     //_sortedArr = [NSArray array];
     //  _titles = [NSMutableArray array];
     
@@ -99,6 +101,7 @@
                 ContactObject *object = [ContactObject new];
                 NSMutableArray *contactNumbersArray = [[NSMutableArray alloc]init];
                 for (CNContact *contact in cnContacts) {
+                    NSMutableArray *contactArray = [[NSMutableArray alloc]init];
                     object.name = contact.givenName;
                     object.lastname = contact.familyName;
                     NSString *newName = [NSString string];
@@ -126,19 +129,29 @@
                     if (image != nil) {
                         object.image = image;
                     }else{
-                        object.image = [UIImage imageNamed:@"person-icon.png"];
+                        object.image = [UIImage imageNamed:@"noPhoto"];
                     }
                     for (CNLabeledValue *label in contact.phoneNumbers) {
                         object.phone = [label.value stringValue];
                         if ([object.phone length] > 0) {
                             [contactNumbersArray addObject:object.phone];
                         }
+                         [contactArray addObject: object.phone];
                     }
-                    self.personDict = [[NSDictionary alloc] initWithObjectsAndKeys: fullName,@"fullName",object.image,@"userImage",object.phone,@"PhoneNumbers", nil];
-                    [self.array addObject:[NSString stringWithFormat:@"%@",[self.personDict objectForKey:@"fullName"]]];
+                    object.phoneNumbers = contactArray;
+                 
+                    
+                    self.personDict = [[NSDictionary alloc] initWithObjectsAndKeys:  fullName,@"fullName",object.image,@"userImage",object.phone,@"phoneNumber",object.phoneNumbers,@"phoneNumbersAll" ,nil];
+                    [self.array addObject:[NSString stringWithFormat:@"%@",[self.personDict  objectForKey:@"fullName"]]];
+                    [self.arrayWithDict addObject:self.personDict];
+                   
+                    
+                  //  [self.finalDictionary setValuesForKeysWithDictionary:r
+                    
                     // NSLog(@"The contactsArray are - %@",self.array); [\u0401\u0451\u0410-\u044f]
                     
                 }
+                //object.phoneNumbers = contactNumbersArray;
                 self.sortedArray = [self.array sortedArrayUsingSelector:@selector(compare:)];
                 [self sort];
                 [self makeSection];
@@ -329,14 +342,26 @@
 #pragma mark - Delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // ContactObject *object = _array[indexPath.row];
-    //  [_helpArray replaceObjectAtIndex:indexPath.section withObject:[NSNumber numberWithBool:NO]];
+ 
+
+    NSString *sectionTitle = [self.titles objectAtIndex:indexPath.section];
+    NSArray *sectionName = [self.dictionary objectForKey:sectionTitle];
+    NSString *contact = [sectionName objectAtIndex:indexPath.row];
     
-    //  [_mainTableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+    for (id dict in _arrayWithDict) {
+        for (NSString *str in [dict objectForKey:@"phoneNumbersAll"]) {
+            if ([contact isEqualToString: [dict objectForKey:@"fullName"]]) {
+                _message = str;
+            }
+        }
+    }
+
     
-    // [UIColor colorWithHexString:@"0xFEF6E6"];
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Alert"
-                                                                   message:@"Message"
+    NSLog(@"%@", self.arrayWithDict);
+    NSLog(@"%@", _message);
+
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:contact
+                                                                   message:_message
                                                             preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:action];

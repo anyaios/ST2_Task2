@@ -12,5 +12,4 @@
 
 @implementation ContactObject
 
-
 @end
