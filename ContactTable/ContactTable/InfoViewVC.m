@@ -111,23 +111,35 @@
     _label.textAlignment = NSTextAlignmentCenter;
     _label.translatesAutoresizingMaskIntoConstraints = NO;
     _label.textAlignment = NSTextAlignmentCenter;
-    _label.font = [UIFont systemFontOfSize:23 weight:NSDateFormatterMediumStyle];
+    _label.font = [UIFont systemFontOfSize:23 weight:UIFontWeightMedium];
     _label.translatesAutoresizingMaskIntoConstraints = NO;
-    _icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 150, 150)];
+    
+    _icon = [[UIImageView alloc] initWithFrame:CGRectMake(_infoTable.frame.size.width/2  -75, _infoTable.frame.size.height /8 -75, 150, 150)];
     [_icon setImage:_infoImage];
     _icon.layer.cornerRadius = CGRectGetHeight(_icon.frame) / 2;
     _icon.clipsToBounds = YES;
-    [_header addSubview:_icon];
-    [_header addSubview:_label];
     
+    _conteiner = [[UIView alloc] initWithFrame:self.view.frame];
+    [_conteiner addSubview:_label];
+    [_conteiner addSubview:_icon];
+    _conteiner.center = _icon.center;
     
+    [_header addSubview:_conteiner];
+  //  [_header addSubview:_label];
+    _conteiner.layer.borderWidth = 1;
     
-    NSString *horizontalFormat = @"H:|-[label]-|";
-    NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:horizontalFormat options:0 metrics:nil views:@{@"label":self.label}];
+    _conteiner.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    NSString *horiz = @"H:|-[label]-|";
+    NSArray *horizontalC = [NSLayoutConstraint constraintsWithVisualFormat:horiz options:0 metrics:nil views:@{@"label":self.label}];
+    [self.conteiner addConstraints:horizontalC];
+    
+    NSString *horizontalFormat = @"H:|-[conteiner]-|";
+    NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:horizontalFormat options:0 metrics:nil views:@{@"conteiner":self.conteiner}];
     [self.header addConstraints:horizontalConstraints];
     
-    NSString *verticalFormat = @"V:|-[label]-|";
-    NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:verticalFormat options:0 metrics:nil views:@{@"label":self.label}];
+    NSString *verticalFormat = @"V:|-[conteiner]-|";
+    NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:verticalFormat options:0 metrics:nil views:@{@"conteiner":self.conteiner}];
     [self.header addConstraints:verticalConstraints];
     
     
