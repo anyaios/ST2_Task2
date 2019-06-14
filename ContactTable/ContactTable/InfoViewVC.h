@@ -12,14 +12,12 @@
 
 
 @interface InfoViewVC : UIViewController
+
 @property (weak, nonatomic) IBOutlet UITableView *infoTable;
 @property (nonatomic, strong) NSString *phoneNumber;
 @property (nonatomic, strong) UIImage *infoImage;
 @property (nonatomic, strong) NSString *fullName;
 @property (nonatomic, strong) NSArray *phones;
-@property (weak, nonatomic) IBOutlet UIView *headerXib;
-@property (weak, nonatomic) IBOutlet UIImageView *imageXib;
-@property (weak, nonatomic) IBOutlet UILabel *labelXib;
 
 @end
 

@@ -33,9 +33,9 @@
     [_infoTable registerNib:nib forCellReuseIdentifier:@"InfoPhotoCell"];
     NSLog(@"%@ phone number", _phoneNumber);
     
-  //  [self setHeaderConstraints];
+    [self setHeaderConstraints];
     
-    CGFloat height = 40;
+    CGFloat height = self.view.frame.size.height/2;
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _infoTable.bounds.size.width, height)];
     self.infoTable.tableHeaderView = view;
     self.infoTable.contentInset = UIEdgeInsetsMake(-height, 0, 0, 0);
@@ -55,7 +55,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-      InfoTableViewCell *cell = (InfoTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"InfoPhotoCell" forIndexPath:indexPath];
+    InfoTableViewCell *cell = (InfoTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"InfoPhotoCell" forIndexPath:indexPath];
     cell.InfoLabel.text = _phones[indexPath.row];
     return cell;
 }
@@ -70,36 +70,23 @@
 
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//    UIView *header = [[UIView alloc] initWithFrame:CGRectZero];
-//    UIImageView *icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 150, 150)];
-//    [icon setImage:_infoImage];
-//    icon.layer.cornerRadius = CGRectGetHeight(icon.frame) / 2;
-//    icon.clipsToBounds = YES;
-//    [header addSubview:icon];
-//
-//    UILabel *infoName = [[UILabel alloc] initWithFrame: CGRectZero];
-//    infoName.text = _fullName;
-//    infoName.textAlignment = NSTextAlignmentCenter;
-//    infoName.font = [UIFont systemFontOfSize:23 weight:NSDateFormatterMediumStyle];
-//    NSLog(@"My name is -  %@" , _fullName);
-//    //[icon addSubview:infoName];
-//    header.layer.borderWidth = 2;
-//    [header addSubview:infoName];
-  //  [self setHeaderConstraints];
-    _headerXib = _header;
-    _labelXib.text = _fullName;
-    _labelXib.font = [UIFont systemFontOfSize:23 weight:UIFontWeightMedium];
+    //    UIView *header = [[UIView alloc] initWithFrame:CGRectZero];
+    //    UIImageView *icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 150, 150)];
+    //    [icon setImage:_infoImage];
+    //    icon.layer.cornerRadius = CGRectGetHeight(icon.frame) / 2;
+    //    icon.clipsToBounds = YES;
+    //    [header addSubview:icon];
+    //
+    //    UILabel *infoName = [[UILabel alloc] initWithFrame: CGRectZero];
+    //    infoName.text = _fullName;
+    //    infoName.textAlignment = NSTextAlignmentCenter;
+    //    infoName.font = [UIFont systemFontOfSize:23 weight:NSDateFormatterMediumStyle];
+    //    NSLog(@"My name is -  %@" , _fullName);
+    //    //[icon addSubview:infoName];
+    //    header.layer.borderWidth = 2;
+    //    [header addSubview:infoName];
     
-    _icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 150, 150)];
-    [_icon setImage:_infoImage];
-    _icon.layer.cornerRadius = CGRectGetHeight(_icon.frame) / 2;
-    _icon.clipsToBounds = YES;
-    
-    
-    [_imageXib setImage:_icon.image];
-    
-    
-    return self.headerXib;
+    return self.header;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -107,10 +94,42 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     self.label.preferredMaxLayoutWidth = tableView.bounds.size.width;
-    return [self.headerXib systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    return 300;
+//    return [self.header systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+}
+-(void)setHeaderConstraints{
+    
+    _header = [[UIView alloc] initWithFrame:CGRectZero];
+    _label = [[UILabel alloc] init];
+    _label.text = _fullName;
+    _label.numberOfLines = 0; //unlimited
+    _label.textAlignment = NSTextAlignmentCenter;
+    _label.translatesAutoresizingMaskIntoConstraints = NO;
+    _label.textAlignment = NSTextAlignmentCenter;
+    _label.font = [UIFont systemFontOfSize:23 weight:NSDateFormatterMediumStyle];
+    _label.translatesAutoresizingMaskIntoConstraints = NO;
+    _icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 150, 150)];
+    [_icon setImage:_infoImage];
+    _icon.layer.cornerRadius = CGRectGetHeight(_icon.frame) / 2;
+    _icon.clipsToBounds = YES;
+    [_header addSubview:_icon];
+    [_header addSubview:_label];
+    
+    
+    
+    NSString *horizontalFormat = @"H:|-[label]-|";
+    NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:horizontalFormat options:0 metrics:nil views:@{@"label":self.label}];
+    [self.header addConstraints:horizontalConstraints];
+    
+    NSString *verticalFormat = @"V:|-[label]-|";
+    NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:verticalFormat options:0 metrics:nil views:@{@"label":self.label}];
+    [self.header addConstraints:verticalConstraints];
+    
     
     
 }
