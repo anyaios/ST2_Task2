@@ -28,6 +28,7 @@
     self.infoTable.dataSource = self;
     self.infoTable.delegate = self;
     
+    _infoTable.alwaysBounceVertical = NO;
     
     UINib *nib = [UINib nibWithNibName:@"InfoTableViewCell" bundle:nil];
     [_infoTable registerNib:nib forCellReuseIdentifier:@"InfoPhotoCell"];
@@ -70,21 +71,8 @@
 
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    //    UIView *header = [[UIView alloc] initWithFrame:CGRectZero];
-    //    UIImageView *icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 150, 150)];
-    //    [icon setImage:_infoImage];
-    //    icon.layer.cornerRadius = CGRectGetHeight(icon.frame) / 2;
-    //    icon.clipsToBounds = YES;
-    //    [header addSubview:icon];
-    //
-    //    UILabel *infoName = [[UILabel alloc] initWithFrame: CGRectZero];
-    //    infoName.text = _fullName;
-    //    infoName.textAlignment = NSTextAlignmentCenter;
-    //    infoName.font = [UIFont systemFontOfSize:23 weight:NSDateFormatterMediumStyle];
-    //    NSLog(@"My name is -  %@" , _fullName);
-    //    //[icon addSubview:infoName];
-    //    header.layer.borderWidth = 2;
-    //    [header addSubview:infoName];
+
+        NSLog(@"My name is -  %@" , _fullName);
     
     return self.header;
 }
@@ -113,6 +101,7 @@
     _label.textAlignment = NSTextAlignmentCenter;
     _label.font = [UIFont systemFontOfSize:23 weight:UIFontWeightMedium];
     _label.translatesAutoresizingMaskIntoConstraints = NO;
+  
     
     _icon = [[UIImageView alloc] initWithFrame:CGRectMake(_infoTable.frame.size.width/2  -75, _infoTable.frame.size.height /8 -75, 150, 150)];
     [_icon setImage:_infoImage];
@@ -126,7 +115,7 @@
     
     [_header addSubview:_conteiner];
   //  [_header addSubview:_label];
-    _conteiner.layer.borderWidth = 1;
+    _conteiner.layer.borderWidth = 0;
     
     _conteiner.translatesAutoresizingMaskIntoConstraints = NO;
     
