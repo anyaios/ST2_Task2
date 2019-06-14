@@ -10,11 +10,13 @@
 #import "ContactObject.h"
 #import "CustomTableViewCell.h"
 #import "UIColor+HexColor.h"
+#import "InfoViewVC.h"
+
 
 
 
 @interface MainTableViewController () <UITableViewDelegate, UITableViewDataSource, CNContactViewControllerDelegate>
-@property (weak, nonatomic) IBOutlet UITableView *mainTableView;
+
 @property (strong, nonatomic) NSMutableArray *array;
 @end
 
@@ -241,7 +243,6 @@
     
     cell.backgroundColor = [UIColor colorWithHexString:@"0xFFFFFF"];
     cell.layer.borderColor = [[UIColor colorWithHexString:@"0xDFDFDF"] CGColor];
-    // [cell.selectedBackgroundView setBackgroundColor:[UIColor colorWithHexString:@"0xFEF6E6"]];
     
     UIImage *infoIcon = [UIImage imageNamed:@"info"];
     cell.info.imageView.image = infoIcon;
@@ -276,9 +277,6 @@
     
     NSString *sectionTitle = [self.titles objectAtIndex:section];
     NSArray *sectionArray = [self.dictionary objectForKey:sectionTitle];
-    
-    //  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:gestureRecognizer.view.tag];
-    
     
     UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0,tableView.frame.size.width, 60)];;
     header.backgroundColor = [UIColor colorWithHexString:@"0XF9F9F9"];
@@ -352,6 +350,8 @@
         for (NSString *str in [dict objectForKey:@"phoneNumbersAll"]) {
             if ([contact isEqualToString: [dict objectForKey:@"fullName"]]) {
                 _message = str;
+                _image = [dict objectForKey:@"userImage"];
+                _fullName = contact;
             }
         }
     }
@@ -359,26 +359,26 @@
     
     NSLog(@"%@", self.arrayWithDict);
     NSLog(@"%@", _message);
-
+    
+    InfoViewVC *vc = [InfoViewVC new];
+    vc.phoneNumber = _message;
+    vc.infoImage = _image;
+    vc.fullName = _fullName;
+    
+    
+    
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:contact
                                                                    message:_message
                                                             preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
+        
+        NSLog(@"OK");
+    [self.navigationController pushViewController:vc animated:YES];
+    }];
     [alert addAction:action];
     [self presentViewController:alert animated:YES completion:nil];
     
 }
-
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 
 @end

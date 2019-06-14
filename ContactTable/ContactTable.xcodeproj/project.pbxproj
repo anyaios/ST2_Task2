@@ -17,10 +17,12 @@
 		0B21154722AC0C4A00CD859E /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B21154522AC0C4A00CD859E /* CustomTableViewCell.m */; };
 		0B21154822AC0C4A00CD859E /* CustomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B21154622AC0C4A00CD859E /* CustomTableViewCell.xib */; };
 		0B21154B22AC11FC00CD859E /* ContactObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B21154A22AC11FC00CD859E /* ContactObject.m */; };
-		0B21155222AC1B5B00CD859E /* MainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B21155022AC1B5B00CD859E /* MainTableViewController.m */; };
 		0B21155322AC1B5B00CD859E /* MainTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B21155122AC1B5B00CD859E /* MainTableViewController.xib */; };
-		0B21155822AC59B100CD859E /* SecondTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B21155622AC59B100CD859E /* SecondTableViewController.m */; };
-		0B21155922AC59B100CD859E /* SecondTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B21155722AC59B100CD859E /* SecondTableViewController.xib */; };
+		0B32992E22B31C87000ACD5F /* InfoViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B32992C22B31C87000ACD5F /* InfoViewVC.m */; };
+		0B32992F22B31C87000ACD5F /* InfoViewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B32992D22B31C87000ACD5F /* InfoViewVC.xib */; };
+		0B32993322B32027000ACD5F /* InfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B32993122B32027000ACD5F /* InfoTableViewCell.m */; };
+		0B32993422B32027000ACD5F /* InfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B32993222B32027000ACD5F /* InfoTableViewCell.xib */; };
+		0B32993C22B32F71000ACD5F /* MainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B32993B22B32F71000ACD5F /* MainTableViewController.m */; };
 		0B4C6A7222AD2D0A00C02A4A /* UIColor+HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B4C6A7122AD2D0A00C02A4A /* UIColor+HexColor.m */; };
 /* End PBXBuildFile section */
 
@@ -40,12 +42,15 @@
 		0B21154622AC0C4A00CD859E /* CustomTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTableViewCell.xib; sourceTree = "<group>"; };
 		0B21154922AC11FC00CD859E /* ContactObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactObject.h; sourceTree = "<group>"; };
 		0B21154A22AC11FC00CD859E /* ContactObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContactObject.m; sourceTree = "<group>"; };
-		0B21154F22AC1B5B00CD859E /* MainTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainTableViewController.h; sourceTree = "<group>"; };
-		0B21155022AC1B5B00CD859E /* MainTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainTableViewController.m; sourceTree = "<group>"; };
 		0B21155122AC1B5B00CD859E /* MainTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainTableViewController.xib; sourceTree = "<group>"; };
-		0B21155522AC59B100CD859E /* SecondTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SecondTableViewController.h; path = ../FirstTableVC/FirstTableViewCell/SecondTableViewController.h; sourceTree = "<group>"; };
-		0B21155622AC59B100CD859E /* SecondTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SecondTableViewController.m; path = ../FirstTableVC/FirstTableViewCell/SecondTableViewController.m; sourceTree = "<group>"; };
-		0B21155722AC59B100CD859E /* SecondTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SecondTableViewController.xib; path = ../FirstTableVC/FirstTableViewCell/SecondTableViewController.xib; sourceTree = "<group>"; };
+		0B32992B22B31C87000ACD5F /* InfoViewVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoViewVC.h; sourceTree = "<group>"; };
+		0B32992C22B31C87000ACD5F /* InfoViewVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfoViewVC.m; sourceTree = "<group>"; };
+		0B32992D22B31C87000ACD5F /* InfoViewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoViewVC.xib; sourceTree = "<group>"; };
+		0B32993022B32027000ACD5F /* InfoTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoTableViewCell.h; sourceTree = "<group>"; };
+		0B32993122B32027000ACD5F /* InfoTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfoTableViewCell.m; sourceTree = "<group>"; };
+		0B32993222B32027000ACD5F /* InfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoTableViewCell.xib; sourceTree = "<group>"; };
+		0B32993A22B32F71000ACD5F /* MainTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableViewController.h; sourceTree = "<group>"; };
+		0B32993B22B32F71000ACD5F /* MainTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableViewController.m; sourceTree = "<group>"; };
 		0B4C6A7022AD2D0A00C02A4A /* UIColor+HexColor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+HexColor.h"; sourceTree = "<group>"; };
 		0B4C6A7122AD2D0A00C02A4A /* UIColor+HexColor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexColor.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -83,7 +88,12 @@
 		0B21152322ABDE0100CD859E /* ContactTable */ = {
 			isa = PBXGroup;
 			children = (
-				0B21155D22AC5A8200CD859E /* SecondTableVC */,
+				0B32993022B32027000ACD5F /* InfoTableViewCell.h */,
+				0B32993122B32027000ACD5F /* InfoTableViewCell.m */,
+				0B32993222B32027000ACD5F /* InfoTableViewCell.xib */,
+				0B32992B22B31C87000ACD5F /* InfoViewVC.h */,
+				0B32992C22B31C87000ACD5F /* InfoViewVC.m */,
+				0B32992D22B31C87000ACD5F /* InfoViewVC.xib */,
 				0B21154E22AC132A00CD859E /* FirstTableVC */,
 				0B21154C22AC12F200CD859E /* Contact */,
 				0B21152422ABDE0100CD859E /* AppDelegate.h */,
@@ -121,9 +131,6 @@
 			isa = PBXGroup;
 			children = (
 				0B21155422AC231C00CD859E /* FirstTableViewCell */,
-				0B21154F22AC1B5B00CD859E /* MainTableViewController.h */,
-				0B21155022AC1B5B00CD859E /* MainTableViewController.m */,
-				0B21155122AC1B5B00CD859E /* MainTableViewController.xib */,
 			);
 			path = FirstTableVC;
 			sourceTree = "<group>";
@@ -134,18 +141,11 @@
 				0B21154422AC0C4A00CD859E /* CustomTableViewCell.h */,
 				0B21154522AC0C4A00CD859E /* CustomTableViewCell.m */,
 				0B21154622AC0C4A00CD859E /* CustomTableViewCell.xib */,
+				0B32993A22B32F71000ACD5F /* MainTableViewController.h */,
+				0B32993B22B32F71000ACD5F /* MainTableViewController.m */,
+				0B21155122AC1B5B00CD859E /* MainTableViewController.xib */,
 			);
 			path = FirstTableViewCell;
-			sourceTree = "<group>";
-		};
-		0B21155D22AC5A8200CD859E /* SecondTableVC */ = {
-			isa = PBXGroup;
-			children = (
-				0B21155522AC59B100CD859E /* SecondTableViewController.h */,
-				0B21155622AC59B100CD859E /* SecondTableViewController.m */,
-				0B21155722AC59B100CD859E /* SecondTableViewController.xib */,
-			);
-			path = SecondTableVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -206,11 +206,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B21153122ABDE0300CD859E /* LaunchScreen.storyboard in Resources */,
-				0B21155922AC59B100CD859E /* SecondTableViewController.xib in Resources */,
 				0B21152E22ABDE0300CD859E /* Assets.xcassets in Resources */,
 				0B21152C22ABDE0100CD859E /* Main.storyboard in Resources */,
 				0B21154822AC0C4A00CD859E /* CustomTableViewCell.xib in Resources */,
+				0B32993422B32027000ACD5F /* InfoTableViewCell.xib in Resources */,
 				0B21155322AC1B5B00CD859E /* MainTableViewController.xib in Resources */,
+				0B32992F22B31C87000ACD5F /* InfoViewVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,13 +222,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B32993322B32027000ACD5F /* InfoTableViewCell.m in Sources */,
 				0B4C6A7222AD2D0A00C02A4A /* UIColor+HexColor.m in Sources */,
 				0B21153422ABDE0300CD859E /* main.m in Sources */,
-				0B21155222AC1B5B00CD859E /* MainTableViewController.m in Sources */,
 				0B21152622ABDE0100CD859E /* AppDelegate.m in Sources */,
 				0B21154722AC0C4A00CD859E /* CustomTableViewCell.m in Sources */,
 				0B21154B22AC11FC00CD859E /* ContactObject.m in Sources */,
-				0B21155822AC59B100CD859E /* SecondTableViewController.m in Sources */,
+				0B32992E22B31C87000ACD5F /* InfoViewVC.m in Sources */,
+				0B32993C22B32F71000ACD5F /* MainTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

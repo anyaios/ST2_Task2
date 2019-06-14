@@ -12,21 +12,23 @@
 
 
 
+
 @interface MainTableViewController : UIViewController
 @property NSArray *keys;
+@property (weak, nonatomic) IBOutlet UITableView *mainTableView;
 @property (nonatomic, strong) NSArray *titles;
 @property (nonatomic, strong) NSArray *sortedArray;
 @property (nonatomic, strong) NSMutableArray *helpArray;
 @property (nonatomic, strong) NSDictionary *dictionary;
 @property (nonatomic, strong) NSDictionary *personDict;
 @property (nonatomic, strong) UITapGestureRecognizer *recognizer;
-
 @property (nonatomic, strong) NSArray *finalArray;
 
-
 @property (nonatomic,strong) NSString *message;
-@property (nonatomic, strong) NSMutableArray *arrayWithDict;
+@property (nonatomic,strong) UIImage *image;
+@property (nonatomic,strong) NSString *fullName;
 
+@property (nonatomic, strong) NSMutableArray *arrayWithDict;
 
 @end
 
