@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSString *phoneNumber;
 @property (nonatomic, strong) UIImage *infoImage;
 @property (nonatomic, strong) NSString *fullName;
+@property (nonatomic, strong) NSArray *phones;
 
 @end
 

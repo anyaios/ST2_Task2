@@ -352,6 +352,7 @@
                 _message = str;
                 _image = [dict objectForKey:@"userImage"];
                 _fullName = contact;
+                _phoneNumbersAll = [dict objectForKey:@"phoneNumbersAll"];
             }
         }
     }
@@ -364,6 +365,7 @@
     vc.phoneNumber = _message;
     vc.infoImage = _image;
     vc.fullName = _fullName;
+    vc.phones = _phoneNumbersAll;
     
     
     

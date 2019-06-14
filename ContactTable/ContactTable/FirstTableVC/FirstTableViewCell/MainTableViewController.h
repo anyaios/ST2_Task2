@@ -27,6 +27,7 @@
 @property (nonatomic,strong) NSString *message;
 @property (nonatomic,strong) UIImage *image;
 @property (nonatomic,strong) NSString *fullName;
+@property (nonatomic, strong) NSArray *phoneNumbersAll;
 
 @property (nonatomic, strong) NSMutableArray *arrayWithDict;
 
