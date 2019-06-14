@@ -110,7 +110,7 @@
     _label.textAlignment = NSTextAlignmentCenter;
     _label.translatesAutoresizingMaskIntoConstraints = NO;
     _label.textAlignment = NSTextAlignmentCenter;
-    _label.font = [UIFont systemFontOfSize:23 weight:NSDateFormatterMediumStyle];
+    _label.font = [UIFont systemFontOfSize:23 weight:UIFontWeightMedium];
     _label.translatesAutoresizingMaskIntoConstraints = NO;
     _icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 150, 150)];
     [_icon setImage:_infoImage];
