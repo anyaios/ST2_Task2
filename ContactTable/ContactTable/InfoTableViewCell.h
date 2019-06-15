@@ -11,7 +11,7 @@
 
 
 @interface InfoTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *InfoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 
 @end
 
