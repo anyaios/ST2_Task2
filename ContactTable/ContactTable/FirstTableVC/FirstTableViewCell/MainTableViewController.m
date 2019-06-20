@@ -30,27 +30,22 @@
     _array = [NSMutableArray array];
     _helpArray = [NSMutableArray array];
     _dictionary = [NSMutableDictionary dictionary];
-
     _arrayWithDict =  [NSMutableArray array];
-    //_sortedArr = [NSArray array];
-    //  _titles = [NSMutableArray array];
-    
     [self fetchContactsandAuthorization];
-    
     _mainTableView.dataSource = self;
     _mainTableView.delegate = self;
-    
     UINib *nib = [UINib nibWithNibName:@"CustomTableViewCell" bundle:nil];
     [_mainTableView registerNib:nib forCellReuseIdentifier:@"CustomCell"];
-    
-    
     for (int i=0; i<_dictionary.allKeys.count; i++) {
         [_helpArray addObject:[NSNumber numberWithBool:NO]];
     }
-    //[a-z0-9!@$&#]*$
-    //@"^[A-Za-z]+(?:\\s[A-Za-z]+)*$"
-    
 }
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:NO];
+    [_mainTableView reloadData];
+}
+
+
 -(void)sort {
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat: @"SELF MATCHES %@", @"[a-zA-Z0-9 @&$]*$"];
@@ -79,22 +74,17 @@
        NSFontAttributeName:[UIFont systemFontOfSize:17.0 weight:UIFontWeightSemibold]}];
 }
 
-- (void)fetchContactsandAuthorization
-{
-    // Request authorization to Contacts
+- (void)fetchContactsandAuthorization {
+    
     CNContactStore *store = [[CNContactStore alloc] init];
     [store requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * _Nullable error) {
-        if (granted == YES)
-        {
-            //keys with fetching properties
+        if (granted == YES) {
             self.keys = @[CNContactFamilyNameKey, CNContactGivenNameKey, CNContactPhoneNumbersKey, CNContactImageDataKey];
             NSString *containerId = store.defaultContainerIdentifier;
             NSPredicate *predicate = [CNContact predicateForContactsInContainerWithIdentifier:containerId];
             NSError *error;
             NSArray *cnContacts = [store unifiedContactsMatchingPredicate:predicate keysToFetch:self.keys error:&error];
-            
-            if (error)
-            {
+            if (error) {
                 NSLog(@"error fetching contacts %@", error);
             }
             else
@@ -112,7 +102,6 @@
                     newLastname = [object.lastname substringFromIndex:0];
                     if (newLastname.length <= 0 ) {
                         fullName = newName;
-                        // fullName=[NSString stringWithFormat:@"%@",[object.name substringFromIndex:0]];
                         NSLog(@".%lu.", (unsigned long)[object.name length]);
                         NSLog(@"name  .%@. ",object.name);
                     }else if (newName.length <= 0){
@@ -122,15 +111,12 @@
                     else if (!(newName && newLastname)||!(newName)||!(newLastname)){
                         fullName = @"#";
                     } else {
-                        
                         fullName=[NSString stringWithFormat:@"%@ %@",newLastname,newName];
                     }
-                    
-                    
                     UIImage *image = [UIImage imageWithData:contact.imageData];
                     if (image != nil) {
                         object.image = image;
-                    }else{
+                    } else {
                         object.image = [UIImage imageNamed:@"noPhoto"];
                     }
                     for (CNLabeledValue *label in contact.phoneNumbers) {
@@ -141,66 +127,62 @@
                          [contactArray addObject: object.phone];
                     }
                     object.phoneNumbers = contactArray;
-                 
-                    
                     self.personDict = [[NSDictionary alloc] initWithObjectsAndKeys:  fullName,@"fullName",object.image,@"userImage",object.phone,@"phoneNumber",object.phoneNumbers,@"phoneNumbersAll" ,nil];
                     [self.array addObject:[NSString stringWithFormat:@"%@",[self.personDict  objectForKey:@"fullName"]]];
                     [self.arrayWithDict addObject:self.personDict];
-                   
-                    
-                  //  [self.finalDictionary setValuesForKeysWithDictionary:r
-                    
-                    // NSLog(@"The contactsArray are - %@",self.array); [\u0401\u0451\u0410-\u044f]
-                    
                 }
-                //object.phoneNumbers = contactNumbersArray;
                 self.sortedArray = [self.array sortedArrayUsingSelector:@selector(compare:)];
                 [self sort];
                 [self makeSection];
+                [self sortDictionary];
                 
-                NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-                for (NSString *string in self.finalArray) {
-                    NSString *firstLetter = [string substringToIndex:1];
-                    if (!dict[firstLetter]) {
-                        dict[firstLetter] = [[NSMutableArray alloc] init];
-                    }
-                    [((NSMutableArray *)dict[firstLetter]) addObject:string];
-                }
-                self.dictionary = dict;
-                NSLog(@"The contactsArray are - %@",self.dictionary);
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.mainTableView reloadData];
-                });
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                   [self.mainTableView reloadData];
+//                });
             }
         } else {
-            //self.mainTableView.backgroundView = nil;
-            [self.mainTableView removeFromSuperview];
-            UILabel *textLabel = [[UILabel alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-            textLabel.text = @"Доступ к списку контактов запрещен. Войдите в Settings и разрешите доступ.";
-            textLabel.textAlignment = NSTextAlignmentCenter;
-            textLabel.lineBreakMode = NSLineBreakByWordWrapping;
-            textLabel.numberOfLines = 3;
-            [textLabel setFont:[UIFont systemFontOfSize:17]];
-            [self.view addSubview:textLabel];
-            textLabel.translatesAutoresizingMaskIntoConstraints = NO;
-            [NSLayoutConstraint activateConstraints:@[
-                                                      [textLabel.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-                                                      [textLabel.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-                                                      [textLabel.topAnchor constraintEqualToAnchor:self.view.topAnchor],
-                                                      [textLabel.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor]
-                                                      ]
-             ];
-            
-            
             dispatch_async(dispatch_get_main_queue(), ^{
+                [self.mainTableView removeFromSuperview];
+                [self makeWarning];
                 [self.mainTableView reloadData];
             });
             
         }
     }];
 }
-- (void) makeSection {
+
+-(void)sortDictionary{
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    for (NSString *string in self.finalArray) {
+        NSString *firstLetter = [string substringToIndex:1];
+        if (!dict[firstLetter]) {
+            dict[firstLetter] = [[NSMutableArray alloc] init];
+        }
+        [((NSMutableArray *)dict[firstLetter]) addObject:string];
+    }
+    self.dictionary = dict;
+    NSLog(@"The contactsArray are - %@",self.dictionary);
+}
+
+-(void)makeWarning {
+    UILabel *textLabel = [[UILabel alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    textLabel.text = @"Доступ к списку контактов запрещен. Войдите в Settings и разрешите доступ.";
+    textLabel.textAlignment = NSTextAlignmentCenter;
+    textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    textLabel.numberOfLines = 3;
+    [textLabel setFont:[UIFont systemFontOfSize:17]];
+    [self.view addSubview:textLabel];
+    textLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [NSLayoutConstraint activateConstraints:@[
+                                              [textLabel.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+                                              [textLabel.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+                                              [textLabel.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+                                              [textLabel.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor]
+                                              ]
+     ];
+}
+
+- (void)makeSection {
     NSMutableArray *arr = [NSMutableArray new];
     for (int i=0; i<[_finalArray count]; i++){
         NSString *alphabet = [[_finalArray objectAtIndex:i] uppercaseString];
@@ -209,7 +191,6 @@
     }
     NSOrderedSet *orderedSet = [NSOrderedSet orderedSetWithArray:arr];
     _titles = orderedSet.array;
-    //    _titles = [orderedSet.array filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != %@",orderedSet.array.firstObject]];
     NSLog(@"titles %@", _titles);
     
 }
